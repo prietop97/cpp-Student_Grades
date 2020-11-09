@@ -60,6 +60,10 @@ int main(){
         cout << "Do you want to enter more test scores?" << endl;
         cin >> continueInput;
         if(continueInput == "no") running = false;
+        else if(continueInput != "yes") {
+            running = false;
+            cout << "Invalid entry, program exiting" << endl;
+        }
         cin.ignore(10000, '\n'); // Ignore the typed string if user decides to continue
     }
     // Close the file stream
