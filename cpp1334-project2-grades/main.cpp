@@ -19,12 +19,12 @@
 
 using namespace std;
 
-void displayScores(int score1, int score2, int score3, int score4, int score5);
-void writeScores(int score1, int score2, int score3, int score4, int score5, string studentName, ofstream& file);
-void getScores(int& score1, int& score2, int& score3, int& score4, int& score5);
-int _calculateAverage(int score1, int score2, int score3, int score4, int score5);
-char _determineLetterGrade(int score);
-int _getTestScore();
+void displayScores(double score1, double score2, double score3, double score4, double score5);
+void writeScores(double score1, double score2, double score3, double score4, double score5, string studentName, ofstream& file);
+void getScores(double& score1, double& score2, double& score3, double& score4, double& score5);
+double _calculateAverage(double score1, double score2, double score3, double score4, double score5);
+char _determineLetterGrade(double score);
+double _getTestScore();
 
 // GLOBAL VARIABLES AND CONSTANTS
 const int numberOfTests = 5; // Global variable since this program is hardcoded to be with 5 tests, no reason to be passing them as argument
@@ -35,7 +35,7 @@ int main(){
     bool running = true; // Boolean value used to stop the loop when user enters no
     string continueInput; // Input to capture user input when asked if he want to enter scores for another student
     ofstream studentGradeReport; // Variable to hold the txt file we will be writing to
-    int score1,score2,score3,score4,score5; // All 5 scores variables that will be used to store the tests results
+    double score1,score2,score3,score4,score5; // All 5 scores variables that will be used to store the tests results
     string studentName; // Variable to store student name;
     
     // Open the file - It creates it if it's not already created
@@ -73,7 +73,7 @@ int main(){
     return 0;
 }
 
-void getScores(int& score1, int& score2, int& score3, int& score4, int& score5){
+void getScores(double& score1, double& score2, double& score3, double& score4, double& score5){
     /*
      Wrappper function to remove repetition from main function. Was thinking of using a loop instead but ran into an issue where
      I could not dynamically set the exact variable that this score should be saved to, only way I thought was doing an if else
@@ -88,7 +88,7 @@ void getScores(int& score1, int& score2, int& score3, int& score4, int& score5){
     score5 = _getTestScore();// Get a specific score
 }
 
-void displayScores(const int score1, const int score2, const int score3, const int score4, const int score5){
+void displayScores(const double score1, const double score2, const double score3, const double score4, const double score5){
     /*
      Function input - All 5 scores as const to prevent myself from reassigning any of them by accident.
      Function output - None
@@ -98,7 +98,7 @@ void displayScores(const int score1, const int score2, const int score3, const i
      */
     
     // LOCAL VARIABLES AND CONSTANTS
-    const int average = _calculateAverage(score1,score2,score3,score4,score5); // Save average variable locally so that I can reuse it.
+    const double average = _calculateAverage(score1,score2,score3,score4,score5); // Save average variable locally so that I can reuse it.
     
     // Displays table with all scores
     cout << "Score\t" << "\tGrade\t" << "Letter Grade" << endl;
@@ -112,7 +112,7 @@ void displayScores(const int score1, const int score2, const int score3, const i
     cout << "The average is "<< average << setw(10) << _determineLetterGrade(average) << endl;
 }
 
-void writeScores(const int score1, const int score2, const int score3, const int score4, const int score5, const string studentName, ofstream& file){
+void writeScores(const double score1, const double score2, const double score3, const double score4, const double score5, const string studentName, ofstream& file){
     /*
      Function input - All 5 scores as const to prevent myself from reassigning any of them by accident.
                     - Student name
@@ -123,7 +123,7 @@ void writeScores(const int score1, const int score2, const int score3, const int
      */
     
     // LOCAL VARIABLES AND CONSTANTS
-    const int average = _calculateAverage(score1,score2,score3,score4,score5); // Save average variable locally so that I can reuse it.
+    const double average = _calculateAverage(score1,score2,score3,score4,score5); // Save average variable locally so that I can reuse it.
     /*
      I could have saved the average and all the letterGrade equivalent of each score in variables in the main function and
      passed it down as an argument since we already calculated this in displayScores but these functions already have a lot of
@@ -147,7 +147,7 @@ void writeScores(const int score1, const int score2, const int score3, const int
     file << "The average is "<< average << setw(10) << _determineLetterGrade(average) << endl;
 }
 
-int _getTestScore(){
+double _getTestScore(){
     /*
      Function input - None
      Function output - score that we get from console input
@@ -159,7 +159,7 @@ int _getTestScore(){
     // LOCAL VARIABLES AND CONSTANTS
     static int totalTestsRecorded = 0; // This static variable is used to display the correct test number in the user prompt
     totalTestsRecorded++; // Increments every time we run this function
-    int score; // Variable to store the user input and return it back to the getScores function()
+    double score; // Variable to store the user input and return it back to the getScores function()
     
     // Prompt the user for the test score
     cout << "Enter score " << totalTestsRecorded << ": ";
@@ -170,7 +170,7 @@ int _getTestScore(){
     return score; // Return the score that the user saved.
 }
 
-char _determineLetterGrade(const int score){
+char _determineLetterGrade(const double score){
     /*
      Function input - One score as a const to prevent myself from reassigning it by accident.
      Function output - Char grade that corresponds with the numerical score - A: 90+, B: 80+, C: 70+, D: 60+, F: 59-
@@ -179,15 +179,15 @@ char _determineLetterGrade(const int score){
     // LOCAL VARIABLES AND CONSTANTS
     char grade;
     
-    if(score >= 90) grade = 'A';
-    else if(score >= 80) grade = 'B';
-    else if(score >= 70) grade = 'C';
-    else if(score >= 60) grade = 'D';
+    if(score >= 89.5) grade = 'A';
+    else if(score >= 79.5) grade = 'B';
+    else if(score >= 69.5) grade = 'C';
+    else if(score >= 59.5) grade = 'D';
     else grade = 'F';
     return grade;
 }
 
-int _calculateAverage(const int score1, const int score2, const int score3, const int score4, const int score5){
+double _calculateAverage(const double score1, const double score2, const double score3, const double score4, const double score5){
     /*
      Function input - All 5 scores as const to prevent myself from reassigning any of them by accident.
      Function output - Average of the 5 scores
